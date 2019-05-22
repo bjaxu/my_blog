@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    视频详情
+{% endblock title %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'dist/DPlayer.min.css' %}" type='text/css' media='all'/>
+{% endblock %}
+{% block content %}<!-- 文章详情 -->
+    <div id="detail_row">
+        <ol class="breadcrumb" id="mianbao">
+        <li class="breadcrumb-item"><a href="{% url 'video:video_list' %}">视频列表</a></li>
+        <li class="breadcrumb-item"><a href="#"></a></li>
+        <li class="breadcrumb-item active">{{video.title}}</li>
+        </ol>
+        <!-- 标题及作者 -->
+        <h3>{{ video.title }}</h3>
+        <div class="xinxi">
+            <span>上传者者：{{ video.author }}</span>
+            <span>|</span>
+            <span>{{video.created_time}}</span>
+        </div>
+        <!-- 文章正文 -->
+        <div id="detail_zhengwen">​
+            <div id="dplayer"></div>
+        </div>
+        <div id="detail_time">
+            栏目: <a href="">留白</a>
+        </div>
+        <!--发表评论区-->
+        <div id="detail_comment">
+            {% if user.is_authenticated %}
+                <div id="post-comment">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="body"><strong>我也要发言：</strong></label>
+                            <textarea type="text" class="form-control" id="body" name="body"></textarea>
+                        </div>
+                        <!-- 提交按钮 -->
+                        <button type="submit">发送</button>
+                    </form>
+                </div>
+            {% else %}
+                <h5 class="row justify-content-center" id="pinlun_tishi">
+                    请<a href="#" onclick="user_login()">登录</a>后发表评论
+                </h5>
+            {% endif %}
+        </div>
+        <!--评论显示区-->
+        <div id="comment_area">
+            <h5>共有{{ comments.count }}条评论</h5>
+            <div>
+                {% for comment in comments %}
+            <p>
+                <strong style="color: darkblue">
+                    {{ comment.user }}
+                </strong> 于
+                <span style="color: green">
+                    {{ comment.created|date:"Y-m-d H:i:s" }}
+                </span> 时说：
+            </p>
+            <pre style="font-family: inherit; font-size: 1em;">{{ comment.body }}</pre>
+                 {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block js %}
+    <script src="{% static 'dist/DPlayer.min.js' %}"></script>
+    <script>
+    (function(){
+            var player = new DPlayer({
+                    container:document.getElementById("dplayer"),
+                    autoplay : false,
+                    theme :	'#b7daff',
+                    preload :"no",
+                    video : {
+                            "url":"{{video.video_url}}"
+                    },
+            });
+            window.dplayers||(window.dplayers=[]);
+            window.dplayers.push(player);
+    })()
+    </script>
+{% endblock js %}

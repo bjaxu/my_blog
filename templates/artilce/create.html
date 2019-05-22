@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    富文本编辑
+{% endblock title %}
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+<!-- 写文章表单 -->
+<div id="article_update">
+            <!-- 提交文章的表单 -->
+            <form method="post" action="/article/article-create/2" enctype="multipart/form-data">
+                <!-- Django中需要POST数据的地方都必须有csrf_token -->
+                {% csrf_token %}
+                <!-- 文章标题 -->
+                <div id="update_before">
+                    <!-- 标签 -->
+                    <label for="title">文章标题</label>
+                    <!-- 文本框 -->
+                    <input type="text" id="title" name="title">
+                </div>
+                <!-- 文章正文 -->
+                <div id="update_after">
+                    <label for="body">文章正文</label>
+                    <!-- 文本区域 -->
+                    <div>
+                        {{ article_post_form.media }}
+                        {{ article_post_form.body1}}
+                    </div>
+
+                </div>
+                <div id="update_column">
+                    <label for="column">标签:</label>
+                    <select id="column" name="column" >
+                        <option value="none">请选择标签...</option>
+                        {% for column in columns %}
+                            <option value="{{ column.id }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id="create_img">
+                    <label for="avatar">标题图(必须添加)</label>
+                    <input type="file"  name="avatar" id="avatar">
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" onclick="return create_over()">完成</button>
+            </form>
+</div>
+{% endblock content %}
+{% block js %}
+    <script>
+        $(".django-ckeditor-widget").removeAttr('style');
+        <!--提交前判断-->
+        function create_over(){
+            var r = confirm('确定创建行文章吗？');
+            if(r==true){
+                var title_name = $('#title').val();
+                if (title_name){
+                    var file_name = $('input[name=avatar]').val();
+                    if(file_name){
+                            return true;
+                    }else{
+                        alert('请传入文章图片!');
+                        return false;
+                    }
+                }else {
+                    alert('请传入文章标题!');
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+    </script>
+{% endblock %}

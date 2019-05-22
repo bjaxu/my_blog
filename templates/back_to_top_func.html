@@ -1,0 +1,16 @@
+<button type="button" id="BackTop" class="toTop-arrow" style="z-index: 100;"></button>
+<script>
+    // 向上滚动的函数
+    $(function () {
+        $('#BackTop').click(function () {
+            $('html,body').animate({scrollTop: 0}, 500);
+        });
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 600) {
+                $('#BackTop').fadeIn(200);
+            } else {
+                $('#BackTop').stop().fadeOut(200);
+            }
+        }).scroll();
+    });
+</script>

@@ -1,0 +1,143 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    {#浏览器兼容#}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {#响应式布局#}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link REL="SHORTCUT ICON" HREF="{% static "images/favicon.ico" %}"/>
+    {#<标题>#}
+    <title>{% block title %}{% endblock %}</title>
+    <!--引入css-->
+    {% block head %}{% endblock head %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <!-- 引入monikai.css -->
+    <link rel="stylesheet" href="{% static 'md_css/pastie.css' %}">
+    <script src="{% static 'popper/popper.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/article_list.css' %}">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" type="text/css" media="all">
+    <script src="{% static 'jquery/jquery-3.3.1.js' %}"></script>
+    <!--引入layer-->
+    <script src="{% static 'layer/layer.js' %}"></script>
+    <!-- 引入bootstrap的js文件 -->
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+<div id="wrapper">
+    {#导航栏#}
+    <!--header1导航栏-->
+    {#预留内容位置#}
+    <div id="base_two">
+        {% include 'header.html' %}
+        {% include 'header1.html' %}
+        {% include 'header2.html' %}
+        <div id="base_content">
+            {% block content %}{% endblock content %}
+        </div>
+        <div id="base_sidebar">
+            <div id="gongao">
+                <div style="margin:0 auto;white-space: nowrap;overflow:hidden;" id="scroll_div" class="scroll_div">
+                    <div id="scroll_begin">
+                        欢迎大家来到我的博客，这里用来记录一些编程知识和生活趣事，以及分享一些资源。
+                    </div>
+                    <div id="scroll_end"></div>
+                </div>
+            </div>
+            <div id="demo" class="carousel slide" data-ride="carousel">
+                <div class="title">
+                    <h2>爱好</h2>
+                </div>
+                <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
+                <!-- 轮播图片 -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                    <img src="{% static 'images/shou1.jpg' %}">
+                          <div class="carousel-caption">
+                            <h3>篮球</h3>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/shou2.jpg' %}">
+                        <div class="carousel-caption">
+                            <h3>音乐</h3>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/shou3.jpg' %}">
+                        <div class="carousel-caption">
+                            <h3>旅游</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- 左右切换按钮 -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+            </div>
+            <div class="widget_tag">
+                <div class="title">
+                    <h2>分类</h2>
+                </div>
+                <div class="d_tags">
+                    {% for column in columns %}
+                    <a href="">{{ column.title}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% if article_lists %}
+            <div id="base_hot">
+                <h4>热门文章TOP10</h4>
+                <ul>
+                    {% for article in article_lists %}
+                    <li>
+                        <a target="_blank" href="{% url 'article:article_detail' article.id %}">
+                            <span class="text">{{ article.title|slice:'15'}}</span>
+                            <span class="text-muted1">阅读({{article.total_views}})</span>
+                        </a>
+                    </li>
+                    {% endfor%}
+                </ul>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% block js %}{% endblock js %}
+{% include 'back_to_top_func.html' %}
+<script type="text/javascript">
+        function ScrollImgLeft() {
+            var speed = 50;
+            var scroll_begin = document.getElementById("scroll_begin");
+            var scroll_end = document.getElementById("scroll_end");
+            var scroll_div = document.getElementById("scroll_div");
+            scroll_end.innerHTML = scroll_begin.innerHTML;
+
+            function Marquee() {
+                if (scroll_end.offsetWidth - scroll_div.scrollLeft <= 0)
+                    scroll_div.scrollLeft -= scroll_begin.offsetWidth;
+                else
+                    scroll_div.scrollLeft++;
+            }
+
+            var MyMar = setInterval(Marquee, speed);
+            scroll_div.onmouseover = function () {
+                clearInterval(MyMar);
+            }
+            scroll_div.onmouseout = function () {
+                MyMar = setInterval(Marquee, speed);
+            }
+        }
+</script>
+<script type="text/javascript">ScrollImgLeft();</script>
+</body>
+</html>

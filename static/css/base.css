@@ -1,0 +1,340 @@
+html,body{
+    height: 100%;
+    background-color: #eee;
+}
+/*最大div*/
+#wrapper{
+    position: relative;
+    margin: 0 auto;
+    max-width: 1300px;
+    padding: 0;
+    min-height: 100%;
+}
+/*导航栏*/
+#daohang > ul > li > a{
+    padding-top:0px ;
+    padding-bottom:0px ;
+    height: 20px;
+    font-size: 13px;
+    color: #ae81ff;
+}
+#daohang > ul > li > a:hover{
+    background-color: #0b2e13;
+}
+#daohang{
+    height: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#daohang1{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+/*登录页面提示*/
+#error_tip{
+    color:#e62e2e;
+    display:none;
+}
+/*登录弹窗背景*/
+body .layer_bg{
+    background-image:url("/static/images/dl.jpg");
+}
+/*head1的css*/
+#header1{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#header_block {
+    border-left: 1px solid #d8dfea;
+    border-right: 1px solid #d8dfea;
+    height:50px;
+    background-image: url("/static/images/header.jpg");
+}
+.h_r_3 {
+    margin: 0 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    border-bottom: 1px solid #d8dfea;
+}
+#log{
+    position: absolute;
+    left: 40px;
+    top: 35px;
+}
+/*选中由紫色变为蓝色*/
+#xuan a{
+    font-size:20px;
+    color: #fff3cd;
+}
+#xuan a:hover{
+    color: #007bff;
+}
+/*框和按钮的div*/
+#base_sou{
+    position: relative;
+    float: right;
+    top: 10px;
+    right: 20px;
+}
+/*搜素框*/
+#zzk_q {
+    width: 180px;
+    margin-right: 8px;
+    margin-left: 10px;
+    border: 1px solid #6f42c1;
+}
+/*搜索按钮*/
+#zzk_sou{
+    background-color: #6f42c1;
+    color: white;
+}
+/*header2导航条*/
+#header2_menu{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#header2_menu a{
+    color: #ffeeba;
+    font-size: 15px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+#header2_menu a:hover{
+    background-color: #0b2e13;
+}
+#header2_bk{
+    background-image: url("/static/images/header2.jpg");
+}
+/*正文和侧边*/
+#base_two{
+    zoom: 1;
+    width: 1300px;
+    max-width: 1300px;
+}
+#base_two:after{
+    display:block;
+    clear:both;
+}
+/*侧边栏*/
+#base_sidebar{
+    display: block;
+    float: left;
+    width: 20%;
+    padding-right: 8px;
+    padding-top: 10px;
+}
+/*正文*/
+#base_content{
+    display: block;
+    float: left;
+    width: 79%;
+    background-color: white;
+    margin-left: 10px;
+}
+/*热门文章h4*/
+#base_hot{
+    clear: both;
+	position: relative;
+	border-radius: 4px;
+	overflow: hidden;
+    background-color: white;
+    margin-left: 10px;
+}
+#base_hot h4{
+    text-align: center;
+    font-size: 15px;
+    color: #555;
+    border-bottom: 1px solid #eaeaea;
+    background-color: white;
+    margin: 0;
+    padding: 11px 15px 10px;
+    cursor: default;
+}
+#base_hot h4:hover {
+    cursor: pointer;
+	color: #1e0010;
+}
+/*侧边栏排行正文*/
+#base_hot ul{
+    list-style: none;
+	padding: 0;
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+#base_hot ul li a{
+	display: block;
+	font-size: 12px;
+	min-height:35px;
+	text-decoration: none;
+    padding-top: 8px;
+    color: white;
+}
+#base_hot ul li a:hover{
+    background: rgba(223,223,223,0.20);
+}
+#base_hot ul li:nth-child(1n+0){
+    background-color: #f1b0b7;
+}
+#base_hot ul li:nth-child(2n+0){
+    background-color: #1990b8;
+}
+#base_hot ul li:nth-child(3n+0){
+    background-color: #34ce57;
+}
+#base_hot .text-muted1{
+    float:right;
+}
+/*header下拉菜单*/
+#header_dropdown{
+    width: 80px;
+    font-size: 13px;
+}
+#header_dropdown a{
+    color: #6f42c1;
+}
+#header_dropdown a:hover{
+    background-color: #1b1e21;
+}
+/*回到顶部浮动按钮*/
+/* 按钮边框的大小、位置、样式 */
+.toTop-arrow {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    opacity: 1;
+    background: #bee5eb;
+    cursor: pointer;
+    position: fixed;
+    right: 30px;
+    bottom: 20px;
+    display: none;
+}
+
+/* 绘制按钮中的向上箭头 */
+.toTop-arrow::before, .toTop-arrow::after {
+    width: 20px;
+    height: 8px;
+    border-radius: 10px;
+    background: #e83e8c;
+    position: absolute;
+    content: "";
+}
+
+.toTop-arrow::before {
+    transform: rotate(-50deg) translate(0, -40%);
+    left: 0.5rem;
+}
+
+.toTop-arrow::after {
+    transform: rotate(50deg) translate(0, -40%);
+    right: 0.5rem;
+}
+
+/* 取消点击按钮时的聚焦 */
+.toTop-arrow:focus {
+    outline: none;
+}
+/*底部*/
+.footer{
+    clear: both;
+    position: relative;
+    height: 40px;
+    width: 1280px;
+    margin-left:30px;
+    margin-right: 30px;
+    background-color: #F1F3F4;
+    text-align: center;
+}
+.my_foot p{
+    color: #1b1e21;
+}
+.my_foot a{
+    color: #6f42c1;
+}
+.my_foot a:hover{
+    color: #bb0066;
+}
+/*侧标签栏*/
+.widget_tag{
+    margin-left: 10px;
+    display: block;
+    clear: both;
+    background-color: white;
+    margin-bottom: 20px;
+    text-align: left;
+    line-height: 20px;
+    color: #555
+}
+.widget_tag .title{
+    position: relative;
+    height: 45px;
+    border-bottom: 1px solid #6f42c1;
+    margin: 0 5px;
+}
+.title h2{
+    font-size: 17px;
+    font-weight: 400;
+    width: 80px;
+    line-height: 45px;
+}
+.d_tags{
+    padding: 12px 10px 15px 20px;
+}
+.d_tags a {
+    width: 44%;
+    opacity: .7;
+    text-align: center;
+    filter: alpha(opacity=80);
+    color: #fff;
+    background-color: #00a67c;
+    display: inline-block;
+    margin: 0 5px 5px 0;
+    padding: 2px 6px;
+    line-height: 21px;
+}
+.d_tags a:nth-child(1n+0) {
+    background-color: #15a287;
+}
+.d_tags a:nth-child(2n+0) {
+    background-color: #bb0066;
+}
+.d_tags a:nth-child(3n+0) {
+    background-color: #004085;
+}
+/*图片轮播*/
+#demo{
+    margin-left: 10px;
+    margin-bottom: 20px;
+    background-color: white;
+    color: #555
+}
+#demo .title{
+    position: relative;
+    height: 45px;
+    margin: 0 5px;
+}
+/*公告*/
+#gongao{
+    height:30px;
+    overflow:hidden;
+    line-height:30px;
+    font-size:13px;
+    background-color:white;
+    color:#e62e2e;
+    font-weight:bold;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+#gongao #scroll_begin, #gongao #scroll_end{
+    display:inline
+}
+

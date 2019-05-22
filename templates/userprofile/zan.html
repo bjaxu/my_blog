@@ -1,0 +1,67 @@
+<div class="navbar navbar-expand-sm navbar-light bg-light" id="daohang">
+        <!-- 导航入口 -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'arctile:article_list' %}">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="collect_site()">收藏本站</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">关于作者</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!-- Django的 if 模板语句 -->
+                {% if user.is_authenticated %}
+                    <!-- 如果用户已经登录，则变为登录后的显示 -->
+                    <!--如果已经有头像-->
+{#                    {% if profile.avatar %}#}
+{#                        <li class="nav-item">#}
+{#                            <img style="width: 20px; height: 20px;padding-bottom: 3px; "src="{{profile.avatar.url}}" alt="">#}
+{#                        </li>#}
+{#                    {% else %}#}
+{#                         <li class="nav-item">#}
+{#                            <img style="width: 20px; height: 20px;padding-bottom: 3px;" src="{% static 'images/moren.jpg'%}" alt="">#}
+{#                        </li>#}
+{#                    {% endif %}#}
+                    <li class="nav-item">
+                        <a class="nav-link" href="">{{user.username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">身份:{% if user.is_superuser %}管理员{% else %}平民{% endif %}</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                           href="#">写文章</a>
+                            <div class="dropdown-menu" id="header_dropdown">
+                                <a class="dropdown-item" href="{% url 'arctile:article_create' mark_fu=1 %}">Markdown编辑器</a>
+					            <a class="dropdown-item" href="{% url 'arctile:article_create' mark_fu=2 %}">富文本编辑器</a>
+                            </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'userprofile:edit' user.id %}">设置</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='{% url "userprofile:logout" %}'>退出</a>
+                    </li>
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="#" onclick="user_delete()">删号跑路</a>#}
+{#                    </li>#}
+                <!-- 如果用户未登录，则显示 “登录” -->
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link">身份:游客</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="user_login()">登录</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'userporfile:user_register' %}">注册</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">找回密码</a>
+                    </li>
+                <!-- if 语句在这里结束 -->
+                {% endif %}
+            </ul>
+</div>

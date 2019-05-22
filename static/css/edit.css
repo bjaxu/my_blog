@@ -1,0 +1,57 @@
+/*最外层div*/
+#edit{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+/*简介文本框*/
+#bio{
+    resize: none;
+    width: 950px;
+    height: 190px;
+    border-radius:20px;
+    border: solid 1px #6f42c1;
+    color: #6f42c1;
+    font-size: 13px;
+}
+/*电话输入框*/
+#phone{
+    border: 1px solid #6f42c1;
+    width: 190px;
+    height: 30px;
+}
+/*选择文件筐*/
+#avatar{
+    background-color: #6f42c1;
+    color: white;
+    vertical-align: middle;
+}
+/*提交按钮*/
+#edit_btn{
+    background-color: #6f42c1;
+    color: white;
+    font-size: 20px;
+    width:70px;
+}
+/*注册名字*/
+#edit_name{
+    border-bottom: 1px solid #6f42c1;
+}
+/*默认图片*/
+#default_img{
+    height: 100px;
+    padding-top: 10px;
+}
+/*上传后头像*/
+#new_img{
+    height: 120px;
+    padding-top: 10px;
+}
+/*图像div*/
+#img_show{
+    border-bottom: 1px solid #6f42c1;
+    width: 950px;
+}
+/*上传头像*/
+#up_img{
+    padding-top: 15px;
+}

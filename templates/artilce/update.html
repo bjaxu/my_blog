@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %} 更新文章 {% endblock title %}
+{% block head %}
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <scrpit type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></scrpit>
+    <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'prism/prism.css' %}">
+{% endblock head %}
+{% block content %}
+<div id="article_update">
+            <form method="post" action=".">
+                {% csrf_token %}
+                <div id="update_before">
+                    <label for="title">文章标题</label>
+                    <!-- 在 value 属性中指定文本框的初始值为旧的内容，即 article 对象中的 title 字段 -->
+                    <input type="text" id="title" name="title" value="{{ article.title }}">
+                </div>
+                <div id="update_after">
+                    <label for="body">文章正文</label>
+                    <textarea class="ckeditor" name="body1" id="body1">
+                        {{ article.body1}}
+                    </textarea>
+                </div>
+                <div id="update_column">
+                    <label for="column">标签:</label>
+                    <select id="column" name="column">
+                        {% for column in columns %}
+                            <option value="{{ column.id }}"
+                                    {% if column.id == article.column.id %}
+                                    selected
+                                    {% endif %}">
+                            {{ column }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit">保存修改</button>
+                <button>取消</button>
+            </form>
+</div>
+{% endblock content %}
+{% block js %}
+    <script>
+        $(".django-ckeditor-widget").removeAttr('style');
+        CKEDITOR.replace("body1",
+            {
+                height:450,
+                image_previewText : ' ',
+                extraPlugins:'codesnippet',
+                <!--图片上传路径-->
+                filebrowserImageUploadUrl : '/ckeditor/upload/',
+            }
+        );
+    </script>
+{% endblock js %}

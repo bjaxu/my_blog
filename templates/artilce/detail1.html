@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    文章详情
+{% endblock title %}
+<!--引入代码高亮插件-->
+{% block head %}
+    <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'prism/prism.css' %}">
+{% endblock head %}
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+<!-- 文章详情 -->
+    <div id="detail_row">
+        <ol class="breadcrumb" id="mianbao">
+        <li class="breadcrumb-item"><a href="{% url 'arctile:article_list' %}">文章列表</a></li>
+        <li class="breadcrumb-item"><a href="#">{{article.column}}</a></li>
+        <li class="breadcrumb-item active">{{article.title}}</li>
+        </ol>
+        <!-- 标题及作者 -->
+        <h3>{{ article.title }}</h3>
+        <div class="xinxi">
+            <span>作者：{{ article.author }}</span>
+            <span>|</span>
+            <span>阅读量:{{article.total_views}}</span>
+            <span>|</span>
+            <span>{{article.created_time}}</span>
+            {% if user == article.author %}
+                <a href="#" onclick="confirm_delete()">删除文章</a>
+                {% if article.body %}
+                    <a href="{% url 'article:article_update' article.id %}">修改文章</a>
+                {% else %}
+                    <a href="{% url 'article:article_update1' article.id %}">修改文章</a>
+                {% endif %}
+
+            {% endif %}
+        </div>
+        <!-- 文章正文 -->
+        {% if article.body %}
+            <div id="detail_zhengwen">​
+                    <!-- 新增的目录 -->
+                    {% if toc %}
+                    <div id="detail_mulu">
+                        <h5>
+                            <a data-toggle="collapse" href="#collapseTwo">点击展开目录:</a>
+                        </h5>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            {{ toc|safe }}
+                        </div>
+                    </div>
+                    {% endif %}
+                <div id="detail_body">
+                    <p>{{ article.body|safe}}</p>
+                </div>
+            </div>
+        {% else %}
+            <div id="detail_zhengwen">​
+                <!-- 新增的目录 -->
+                <div id="detail_body">
+                    <p>{{ article.body1|safe}}</p>
+                </div>
+            </div>
+        {% endif %}
+        <div id="detail_time">
+            栏目: <a href="">{{article.column}}</a>
+            <span>最后更新:{{article.updated_time}}</span>
+        </div>
+        <!--发表评论区-->
+        <div id="detail_comment">
+            {% if user.is_authenticated %}
+                <div id="post-comment">
+                    <form action="{% url 'comment:post_conmment' article.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="body"><strong>我也要发言：</strong></label>
+                            <textarea type="text" class="form-control" id="body" name="body"></textarea>
+                        </div>
+                        <!-- 提交按钮 -->
+                        <button type="submit">发送</button>
+                    </form>
+                </div>
+            {% else %}
+                <h5 class="row justify-content-center" id="pinlun_tishi">
+                    请<a href="#" onclick="user_login()">登录</a>后发表评论
+                </h5>
+            {% endif %}
+        </div>
+        <!--评论显示区-->
+        <div id="comment_area">
+            <h5>共有{{ comments.count }}条评论</h5>
+            <div>
+                {% for comment in comments %}
+            <p>
+                <strong style="color: darkblue">
+                    {{ comment.user }}
+                </strong> 于
+                <span style="color: green">
+                    {{ comment.created|date:"Y-m-d H:i:s" }}
+                </span> 时说：
+            </p>
+            <pre style="font-family: inherit; font-size: 1em;">{{ comment.body }}</pre>
+                 {% endfor %}
+            </div>
+        </div>
+    </div>
+
+<script>
+    // 删除文章的函数
+    function confirm_delete() {
+        // 调用layer弹窗组件
+        layer.open({
+            // 弹窗标题
+            title: "确认删除",
+            // 正文
+            content: "确认删除这篇文章吗？",
+            // 点击确定按钮后调用的回调函数
+            yes: function(index, layero) {
+                // 指定应当前往的 url
+                location.href='{% url "article:article_delete" article.id %}'
+            },
+        })
+    }
+</script>
+{% endblock content %}

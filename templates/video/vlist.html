@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    视频列表页
+{% endblock title %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/video_list.css' %}">
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block content %}
+    <div class="video_list">
+    {% for video in videos %}
+        <div class="one_video">
+                <div class="zoom-container">
+                    <a href="{% url 'video:video_detail' video.id %}">
+                        <span class="zoom-caption">
+                            <i class="icon-play fa fa-play"></i>
+                        </span>
+                        <img src="{{video.image_url}}">
+                    </a>
+                </div>
+                <h3 class="vid-name">{{video.title}}</h3>
+                <div class="info1">
+                    <h5>By <a href="#">{{video.author}}</a></h5>
+                    <span><i class="fa fa-calendar"></i>{{video.created_time}}</span>
+                    <span><i class="fa fa-heart"></i>0</span>
+                </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock content %}

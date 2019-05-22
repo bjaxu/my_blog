@@ -1,0 +1,17 @@
+<div id="header1">
+    <p class="h_r_3"></p>
+    <div id="header_block">
+        <div id="log">
+            <p id="xuan"><a href="#">欢迎光临噼里啪啦的网站</a></p>
+        </div>
+        <div id="base_sou">
+            <form method="get" action="/article/article-list/">
+                {% csrf_token %}
+                <input type="text" id="zzk_q" class="search_input" onkeydown="" tabindex="3" name="search" required>
+                <input id="zzk_sou" onclick="" type="submit" class="search_btn" value="搜索">
+            </form>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <p class="h_r_3"></p>
+</div>

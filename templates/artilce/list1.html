@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    文章列表页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<!-- 定义放置文章标题的div容器 -->
+    <div id="article_row">
+        <!--如果有searchd动作-->
+        {% if search %}
+            <!--如果检索到了内容-->
+            {% if articles %}
+                <h4 id="article_resutl1"><span>"{{ search }}"</span>的搜索结果如下：</h4>
+                <hr>
+                {% for article in articles %}
+                <!-- 文章内容 -->
+                <div id="article_list">
+                <div id="article_img">
+                    <a target="_blank" href="{% url 'article:article_detail' article.id %}">
+                        <img src="{{ article.avatar.url }}" alt="">
+                    </a>
+                </div>
+                <div id="article_info">
+                  <dl>
+                    <dt class="article_title">
+                        <a href="{% url 'article:article_detail' article.id %}" target="_blank" >{{article.title}}</a>
+                    </dt>
+                    <div class="free">
+                        <span class="name">
+                            <a href="" title="" rel="author">{{article.author}}</a>
+                        </span>
+                        <span class="identity"></span>
+                        <span class="time">{{article.created_time}}</span>
+                    </div>
+                      {% if article.body %}
+                        <dd class="text">
+                            <span>{{article.body|safe|slice:'122'}}</span>
+                            <span class="test_body" style="display: none">{{article.body|safe}}</span>
+                        </dd>
+                      {% else %}
+                          <dd class="text">
+                            <span>{{article.body1|striptags|slice:"130"}}</span>
+                            <span class="test_body" style="display: none">{{article.body1|striptags|safe}}</span>
+                          </dd>
+                      {% endif %}
+                  </dl>
+                  <div id="article_boot">
+                      <span class="tags">
+                          {% if article.column %}
+                          <a href="">{{article.column}}</a>
+                          {% else %}
+                              <a href="">栏目</a>
+                          {% endif %}
+                          <a class="two" href="">标签预留</a>
+                      </span>
+                      <div class="look">
+                          <span class="plun"><a href="">0评论</a></span>
+                          <span> 共 <strong>{{article.total_views}}</strong> 人围观</span>
+                      </div>
+                  </div>
+                </div>
+                </div>
+                {% endfor %}
+                <!--分页-->
+                <div class="edit_quotes">
+                <a href="?page=1&search={{ search }}">首页</a>
+                {% if articles.has_previous %}
+                    <a href="?page={{ articles.previous_page_number}}&search={{ search }}">上一页</a>
+                    <a href="?page={{ articles.previous_page_number}}&search={{ search }}">{{articles.previous_page_number}}</a>
+                {% else %}
+                    <a class="disabled" href="">上一页</a>
+                {% endif %}
+                <a id="edit_current" href="?page={{articles.number}}&search={{ search }}">{{articles.number}}</a>
+                {% if articles.has_next %}
+                        <a href="?page={{ articles.next_page_number}}&search={{ search }}">{{ articles.next_page_number}}</a>
+                       <a href="?page={{ articles.next_page_number}}&search={{ search }}">下一页</a>
+                {% else %}
+                    <a class="disabled" href="">下一页</a>
+                {% endif %}
+                <a href="?page={{ articles.paginator.num_pages }}&search={{ search }}">尾页</a>
+                </div>
+                <!--扩展js代码 关键字高亮显示-->
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        <!--标题-->
+                        var regExp = new RegExp("(>[^<]*?)"+"{{search}}"+"([^>]*?<)","gmi");
+                        $('.article_title').each(function () {
+                            this.innerHTML=this.innerHTML.replace(regExp,"$1<font color='#f92672'>"+"{{ search}}"+"</font>$2");
+                        });
+                        <!--正文-->
+                        var regExp1 = new RegExp("{{search}}","gmi");
+                        $('.text').each(function () {
+                            <!--文章的内容-->
+                            body = $(this).find(".test_body").html();
+                            if (body){
+                                var article_body = body.match(/\S{0,15}{{search}}\S{0,15}/gmi);
+                                     <!--搜索里面的关键字-->
+                                if(article_body){
+                                    <!--取匹配结果的前三项-->
+                                    var article_body1 = article_body.slice(0,3).join('');
+                                    <!--替换-->
+                                    var jieguo = article_body1.replace(regExp1,"<font color='#f92672'>"+"{{ search}}"+"</font>");
+                                    this.innerHTML = jieguo;
+                                }
+                            }
+
+                        });
+                    });
+                </script>
+                <!--如果没有检索到内容-->
+            {% else %}
+                <h4 id="article_resutl2">对不起暂无<span>"{{ search }}"</span>有关的文章。</h4>
+                <hr>
+            {% endif %}
+            <!--如果没有search动作-->
+        {% else %}
+            {% for article in articles %}
+            <!-- 文章内容 -->
+            <div id="article_list">
+                <div id="article_img">
+                    <a target="_blank" href="{% url 'article:article_detail' article.id %}">
+                        <img src="{{ article.avatar.url }}" alt="">
+                    </a>
+                </div>
+                <div id="article_info">
+                  <dl>
+                    <dt>
+                        <a href="{% url 'article:article_detail' article.id %}" target="_blank" >{{article.title}}</a>
+                    </dt>
+                    <div class="free">
+                        <span class="name">
+                            <a href="" title="" rel="author">{{article.author}}</a>
+                        </span>
+                        <span class="identity"></span>
+                        <span class="time">{{article.created_time}}</span>
+                    </div>
+                        <div>
+                      {% if article.body %}
+                          <dd class="text">{{ article.body|safe|slice:'122' }}</dd>
+                      {% else %}
+                          {% autoescape off %}
+                          <dd class="text">{{article.body1|striptags|slice:"130"}}</dd>
+                          {% endautoescape %}
+                      {% endif %}
+                        </div>
+                  </dl>
+                  <div id="article_boot">
+                      <span class="tags">
+                          {% if article.column %}
+                          <a href="">{{article.column}}</a>
+                          {% else %}
+                              <a href="">栏目</a>
+                          {% endif %}
+                          <a class="two" href="">标签预留</a>
+                      </span>
+                      <div class="look">
+                          <span class="plun"><a href="">0评论</a></span>
+                          <span> 共 <strong>{{article.total_views}}</strong> 人围观</span>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+                <!--分页-->
+            <div class="edit_quotes">
+            <a href="?page=1">首页</a>
+            {% if articles.has_previous %}
+                <a href="?page={{ articles.previous_page_number}}">上一页</a>
+                <a href="?page={{ articles.previous_page_number}}">{{articles.previous_page_number}}</a>
+            {% else %}
+                <a class="disabled" href="">上一页</a>
+            {% endif %}
+            <a id="edit_current" href="?page={{articles.number}}">{{articles.number}}</a>
+            {% if articles.has_next %}
+                    <a href="?page={{ articles.next_page_number }}">{{ articles.next_page_number}}</a>
+                   <a href="?page={{ articles.next_page_number }}">下一页</a>
+            {% else %}
+                <a class="disabled" href="">下一页</a>
+            {% endif %}
+            <a href="?page={{ articles.paginator.num_pages }}">尾页</a>
+            </div>
+        {% endif %}
+        </div>
+{% endblock content %}

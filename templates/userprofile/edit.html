@@ -1,0 +1,74 @@
+{% extends "base.html" %} {% load staticfiles %}
+{% block title %} 修改用户信息 {% endblock title %}
+{% block head %}
+<link  rel="stylesheet" href="{% static 'css/edit.css' %}">
+{% endblock head %}
+{% block content %}
+<div id="edit" class="container">
+    <div class="row">
+        <div class="col-12">
+            <br>
+            <div class="col-md-4" id="edit_name">
+                <p>用户名: {{ user.username }}</p>
+            </div>
+            <div id="img_show">
+            {% if profile.avatar %}
+                <div class="col-md-4" id="new_img">
+                    <label for="">我的头像</label>
+                    <img src="{{ profile.avatar.url }}" style="width: 100px; height: 100px;" class="col-md-4">
+                </div>
+            {% else %}
+                <div class="col-md-4" id="default_img">
+                    <label for="">默认头像</label>
+                    <img style="width: 80px; height: 80px" src="{% static 'images/moren.jpg' %}" alt="" >
+                </div>
+            {% endif %}
+            </div>
+            <form id="edit_form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- avatar -->
+                <div class="form-group col-md-4" id="up_img">
+                    <label for="avatar">上传头像</label>
+                    <input type="file" class="form-control-file" name="avatar" id="avatar">
+                </div>
+
+                <!-- phone -->
+                <div class="form-group col-md-4">
+                    <label for="phone">QQ</label>
+                    <input type="text" class="form-control" id="phone" name="phone" value="{{ profile.phone }}">
+                </div>
+                <!-- bio -->
+                <div class="form-group col-md-4">
+                    <label for="bio">简介(注意不要超过500个字符!)</label>
+                    <!-- 文本区域 -->
+                    <textarea type="text" class="form-control" id="bio" name="bio" rows="12">{{ profile.bio }}</textarea>
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" onclick="edit_go()" id="edit_btn">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block js %}
+    <script>
+        <!--点击提交按钮-->
+        function edit_go() {
+            var edit_message = confirm('您确定提交吗?');
+            if(edit_message == true){
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "/profile/edit/"+ user.id,
+                    data: $('#edit_form').serialize(),
+                    success:function (data) {
+                        window.location.href = '/index/';
+                    }
+                });
+            }
+            else{
+                console.log('不提交!');
+            }
+        }
+    </script>
+{% endblock %}

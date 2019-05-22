@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %} 更新文章 {% endblock title %}
+{% block content %}
+<div id="article_update">
+            <form method="post" action=".">
+                {% csrf_token %}
+                <div id="update_before">
+                    <label for="title">文章标题</label>
+                    <!-- 在 value 属性中指定文本框的初始值为旧的内容，即 article 对象中的 title 字段 -->
+                    <input type="text" id="title" name="title" value="{{ article.title }}">
+                </div>
+                <div id="update_after">
+                    <label for="body">文章正文</label>
+                    <!-- 文本域不需要 value 属性，直接在标签体中嵌入数据即可 -->
+                    <textarea type="text"  id="body" name="body" rows="12">{{ article.body }}</textarea>
+                </div>
+                <div id="update_column">
+                    <label for="column">标签:</label>
+                    <select id="column" name="column">
+                        {% for column in columns %}
+                            <option value="{{ column.id }}"
+                                    {% if column.id == article.column.id %}
+                                    selected
+                                    {% endif %}">
+                            {{ column }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit">保存修改</button>
+                <button>取消</button>
+            </form>
+</div>
+{% endblock content %}

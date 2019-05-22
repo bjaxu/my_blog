@@ -1,0 +1,49 @@
+#reg_from
+{
+	background-image: url("/static/images/register.jpg");
+	overflow: hidden;
+	height:550px;
+}
+.mycenter
+{
+	margin-top: 0;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 40px;
+	height: 350px;
+	width: 500px;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: auto;
+}
+.mycenter mysign
+{
+	width: 540px;
+}
+.mycenter input
+{
+	margin-top: 2%;
+	margin-bottom:2%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.mycheckbox
+{
+	margin-top: 10px;
+	margin-left: 40px;
+	margin-bottom: 10px;
+	height: 10px;
+}
+.form-group label {
+                width: 70px;
+                display: inline-block;
+            }
+.form-group button{
+	margin-top: 10%;
+}
+.form-group p{
+	margin-left: 10%;
+    display: inline-block;
+    margin-bottom: auto;
+    vertical-align: middle;
+}
