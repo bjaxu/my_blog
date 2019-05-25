@@ -1,0 +1,105 @@
+{% extends "base1.html" %}
+{% load staticfiles %}
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    文章详情
+{% endblock title %}
+{% block head %}
+    <style>
+        .content {
+            padding: 0 20px;
+            background-color: #fff;
+            border: 1px solid #EAEAEA;
+            border-radius: 4px;
+        }
+    </style>
+      <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'prism/prism.css' %}">
+{% endblock %}
+{% block content %}
+<ol class="breadcrumb" style="background-color: white">
+    <li class="breadcrumb-item"><a href="{% url 'arctile:article_list' %}">文章列表</a></li>
+    <li class="breadcrumb-item"><a href="#"></a></li>
+    <li class="breadcrumb-item active">{{article.title}}</li>
+</ol>
+      <header class="article-header">
+        <h1 class="article-title">
+            <a href="">{{article.title}}</a>
+        </h1>
+        <div class="article-meta">
+            <span class="item article-meta-time">
+          <time class="time" data-toggle="tooltip" data-placement="bottom" title="{{article.created_time}}">
+              <i class="glyphicon glyphicon-time"></i> {{article.created_time}}
+          </time>
+          </span>
+            <span class="item article-meta-source" data-toggle="tooltip" data-placement="bottom" title="{{article.author}}"><i class="glyphicon glyphicon-globe"></i> {{article.author}}</span>
+            <span class="item article-meta-category" data-toggle="tooltip" data-placement="bottom" title="{{article.column}}"><i class="glyphicon glyphicon-list"></i> <a href="program" title="">{{article.column}}</a></span>
+            <span class="item article-meta-views" data-toggle="tooltip" data-placement="bottom" title="查看：{{ article.total_views}}"><i class="glyphicon glyphicon-eye-open"></i> 共{{article.total_views}}人围观</span>
+            <span class="item article-meta-comment" data-toggle="tooltip" data-placement="bottom" title="评论：0"><i class="glyphicon glyphicon-comment"></i> 0评论</span> </div>
+      </header>
+      <article class="article-content">
+        {% if article.body %}
+            <p>{{ article.body|safe}}</p>
+        {% else %}
+            <p>{{ article.body1|safe}}</p>
+        {% endif %}
+        <p class="article-copyright hidden-xs">未经允许不得转载：<a href="">噼里啪啦博客</a> » <a href="article.html">php如何判断一个日期的格式是否正确</a></p>
+      </article>
+        <div class="article-tags">
+            {% if user == article.author %}
+                <a href="#" onclick="confirm_delete()">删除文章</a>
+                {% if article.body %}
+                    <a href="{% url 'article:article_update' article.id %}">修改文章</a>
+                {% else %}
+                    <a href="{% url 'article:article_update1' article.id %}">修改文章</a>
+                {% endif %}
+            {% endif %}
+        </div>
+      <div class="article-tags">标签：<a href="" rel="tag">空白</a></div>
+      <div class="relates">
+        <div class="title">
+          <h3>相关推荐</h3>
+        </div>
+        <ul>
+          <li><a href="article.html">php如何判断一个日期的格式是否正确</a></li>
+        </ul>
+      </div>
+      <div class="title" id="comment">
+        <h3>评论</h3>
+      </div>
+      <div id="respond" class="hidden-xs">
+      {% if user.is_authenticated %}
+        <form action="{% url 'comment:post_conmment' article.id %}" method="post" id="comment-form">
+            {% csrf_token %}
+          <div class="comment">
+            <div class="comment-box">
+              <textarea placeholder="请输入您的评论！" type="text" name="body" id="comment-textarea" cols="100%" rows="3" tabindex="1" ></textarea>
+              <div class="comment-ctrl">
+                <button type="submit"  id="comment-submit" tabindex="5">评论</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      {% else %}
+          <div class="comment-signarea">
+            <h3 class="text-muted">评论前必须登录！</h3>
+            <p> <a href="#" class="btn btn-primary login" rel="nofollow" onclick="user_login()">立即登录</a> &nbsp; <a href="javascript:;" class="btn btn-default register" rel="nofollow">注册</a> </p>
+          </div>
+      {% endif %}
+      </div>
+      <div id="postcomments">
+        <ol class="commentlist">
+        {% for comment in comments %}
+          <li class="comment-content"><span class="comment-f">#1</span>
+            <div class="comment-avatar"><img class="avatar" src="" alt="" /></div>
+            <div class="comment-main">
+              <p>
+                  <span class="address">{{comment.user}}</span><span class="time">{{ comment.created|date:"Y-m-d H:i:s" }}</span><br />
+                  {{ comment.body|safe}}
+              </p>
+            </div>
+          </li>
+        {% endfor %}
+        </ol>
+      </div>
+{% endblock content %}
