@@ -32,7 +32,6 @@
     <div id="base_two">
         {% include 'header.html' %}
         {% include 'header1.html' %}
-        {% include 'header2.html' %}
         <div id="base_content">
             {% block content %}{% endblock content %}
         </div>
@@ -111,9 +110,7 @@
         </div>
     </div>
 </div>
-{% include 'footer.html' %}
 {% block js %}{% endblock js %}
-{% include 'back_to_top_func.html' %}
 <script type="text/javascript">
         function ScrollImgLeft() {
             var speed = 50;

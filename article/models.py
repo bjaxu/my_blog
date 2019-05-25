@@ -36,9 +36,10 @@ class ArticlePost(models.Model):
     # 文章图片
     avatar = ProcessedImageField(
         upload_to='article/%Y%m%d',
-        processors=[ResizeToFill(200,100)],
+        processors=[ResizeToFill(220,150)],
         format='JPEG',
         options={'quality': 100},
+        blank=True,
     )
 
     class Meta:

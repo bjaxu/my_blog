@@ -13,27 +13,31 @@ from comment.models import Comment
 # Create your views here.
 
 # 首页列表
+def article(request):
+    # 拿到top10文章
+    article_lists = ArticlePost.objects.all().order_by('-total_views')[0:10]
+    # 拿到最新发布的 文章3篇
+    articles = ArticlePost.objects.all()
+    # 所有的栏目
+    column = ArticleColumn.objects.all()
+    context = {'articles':articles, 'article_lists':article_lists, 'columns':column}
+    return render(request, 'base1.html', context)
+
+# 文章列表
 def article_list(request):
     # 拿到top10文章
     article_lists = ArticlePost.objects.all().order_by('-total_views')[0:10]
-    # search
-    search = request.GET.get('search')
-    # 如果搜索中有内容
-    if search:
-        article_list = ArticlePost.objects.filter(Q(title__icontains=search) |Q(body__icontains=search) |Q(body1__icontains=search))
-    # 没有内容
-    else:
-        article_list = ArticlePost.objects.all()
+    article_list = ArticlePost.objects.all()
     # 每页显示10篇文章
-    paginator = Paginator(article_list,8)
+    paginator = Paginator(article_list,10)
     # 获取页码数
     page = request.GET.get('page')
     # 将页码数返回给articles
     articles = paginator.get_page(page)
     # 所有的栏目
     column = ArticleColumn.objects.all()
-    context = {'articles':articles, 'article_lists':article_lists, 'search':search, 'columns':column}
-    return render(request, 'artilce/list1.html', context)
+    context = {'articles':articles, 'columns':column, 'article_lists':article_lists}
+    return render(request, 'artilce/list.html', context)
 
 # 文章详情
 def artilce_detail(request, id):
@@ -48,16 +52,15 @@ def artilce_detail(request, id):
     article.total_views += 1
     article.save(update_fields=['total_views'])
     # 将markdown语法 渲染成html样式
-    md = markdown.Markdown(
-        extensions = [
-            'markdown.extensions.extra',
-            'markdown.extensions.codehilite',
-            'markdown.extensions.toc',
-        ]
-    )
-    article.body = md.convert(article.body)
-    context = {'article':article,  'article_lists':article_lists, 'toc':md.toc, 'comments':comments, 'columns':column}
-    return render(request, 'artilce/detail1.html', context)
+    article.body = markdown.markdown(article.body,
+                                     extensions=[
+                                         'markdown.extensions.extra',
+                                         'markdown.extensions.codehilite',
+                                         'markdown.extensions.toc',
+                                     ]
+                                     )
+    context = {'article':article,  'article_lists':article_lists, 'comments':comments, 'columns':column}
+    return render(request, 'artilce/detail.html', context)
 
 # 创建文章的视图
 login_required(login_url='/userprofile/login/')
@@ -65,6 +68,7 @@ def article_create(request, mark_fu):
     if request.method == "POST":
         article_post_form = ArticlePostForm(request.POST, request.FILES )
         # 判断数据是否满足模型
+        print(article_post_form)
         if article_post_form.is_valid():
             # 保存但不提交到数据库
             new_article = article_post_form.save(commit=False)

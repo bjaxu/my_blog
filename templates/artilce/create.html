@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load staticfiles %}
 {% block title %}
     富文本编辑
@@ -38,8 +38,11 @@
                     </select>
                 </div>
                 <div id="create_img">
-                    <label for="avatar">标题图(必须添加)</label>
-                    <input type="file"  name="avatar" id="avatar">
+                    <label for="avatar">标题图(下图为默认图片)</label>
+                    <div id="show-pic">
+                        <img id="book-pic" src="{% static 'images/moarticle.jpg' %}" alt="">
+                    </div>
+                    <input type="file" onchange="show(this)"  name="avatar" id="avatar">
                 </div>
                 <!-- 提交按钮 -->
                 <button type="submit" onclick="return create_over()">完成</button>
@@ -47,28 +50,47 @@
 </div>
 {% endblock content %}
 {% block js %}
-    <script>
-        $(".django-ckeditor-widget").removeAttr('style');
-        <!--提交前判断-->
-        function create_over(){
-            var r = confirm('确定创建行文章吗？');
-            if(r==true){
-                var title_name = $('#title').val();
-                if (title_name){
-                    var file_name = $('input[name=avatar]').val();
-                    if(file_name){
-                            return true;
-                    }else{
-                        alert('请传入文章图片!');
-                        return false;
-                    }
-                }else {
-                    alert('请传入文章标题!');
-                    return false;
+<script>
+    function show(f) {
+        //得到上传文件的值
+        var fileName=document.getElementById("avatar").value;
+            //返回String对象中子字符串最后出现的位置.
+        var seat=fileName.lastIndexOf(".");
+            //返回位于String对象中指定位置的子字符串并转换为小写.
+        var extension=fileName.substring(seat).toLowerCase();
+            //判断允许上传的文件格式
+        if(extension!=".jpg"&&extension!=".jpeg"&&extension!=".gif"&&extension!=".png"&&extension!=".bmp"){
+            alert("不支持"+extension+"文件的上传!");
+            document.getElementById("book-pic").src = "{% static 'images/moarticle.jpg' %}";
+            return false;
+        }else{
+            var rd = new FileReader();//创建文件读取对象
+            if(f.files.length >= 1){
+                var files = f.files[0];//获取file组件中的文件
+                rd.readAsDataURL(files);//文件读取装换为base64类型
+                rd.onloadend = function (e) {
+                //加载完毕之后获取结果赋值给img
+                    document.getElementById("book-pic").src = this.result;
                 }
-            }else{
+                }else{
+                    document.getElementById("book-pic").src = "{% static 'images/moarticle.jpg' %}";
+                }
+            }
+    }
+    <!--提交前判断-->
+    function create_over(){
+        var r = confirm('确定创建行文章吗？');
+        if(r==true){
+            var title_name = $('#title').val();
+            if (title_name){
+                return true;
+            }else {
+                alert('请传入文章标题!');
                 return false;
             }
+        }else{
+            return false;
         }
-    </script>
+    }
+</script>
 {% endblock %}

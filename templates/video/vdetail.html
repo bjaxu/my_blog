@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
 {% load staticfiles %}
 <!-- 写入 base.html 中定义的 title -->
 {% block title %}
@@ -26,44 +26,7 @@
             <div id="dplayer"></div>
         </div>
         <div id="detail_time">
-            栏目: <a href="">留白</a>
-        </div>
-        <!--发表评论区-->
-        <div id="detail_comment">
-            {% if user.is_authenticated %}
-                <div id="post-comment">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="body"><strong>我也要发言：</strong></label>
-                            <textarea type="text" class="form-control" id="body" name="body"></textarea>
-                        </div>
-                        <!-- 提交按钮 -->
-                        <button type="submit">发送</button>
-                    </form>
-                </div>
-            {% else %}
-                <h5 class="row justify-content-center" id="pinlun_tishi">
-                    请<a href="#" onclick="user_login()">登录</a>后发表评论
-                </h5>
-            {% endif %}
-        </div>
-        <!--评论显示区-->
-        <div id="comment_area">
-            <h5>共有{{ comments.count }}条评论</h5>
-            <div>
-                {% for comment in comments %}
-            <p>
-                <strong style="color: darkblue">
-                    {{ comment.user }}
-                </strong> 于
-                <span style="color: green">
-                    {{ comment.created|date:"Y-m-d H:i:s" }}
-                </span> 时说：
-            </p>
-            <pre style="font-family: inherit; font-size: 1em;">{{ comment.body }}</pre>
-                 {% endfor %}
-            </div>
+            类型: <a href="">留白</a>
         </div>
     </div>
 {% endblock content %}

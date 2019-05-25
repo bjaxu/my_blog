@@ -1,83 +1,73 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
 {% load staticfiles %}
 <!-- 写入 base.html 中定义的 title -->
 {% block title %}
     书籍详情
 {% endblock title %}
 {% block head %}
-     <link rel="stylesheet" href="{% static 'css/book_list.css' %}">
+    <style>
+        .content{
+            padding: 0 20px;
+            background-color: #fff;
+            border: 1px solid #EAEAEA;
+            border-radius: 4px;
+        }
+    </style>
 {% endblock %}
 {% block content %}
-<!-- 文章详情 -->
-    <div id="detail_row">
-        <ol class="breadcrumb" id="mianbao">
-        <li class="breadcrumb-item"><a href="{% url 'book:book_list' %}">书籍列表</a></li>
-        <li class="breadcrumb-item"><a href="#">{{article.column}}</a></li>
-        <li class="breadcrumb-item active">{{book.title}}</li>
-        </ol>
-        <!-- 标题及作者 -->
-        <h3>{{ book.title }}</h3>
-        <div class="xinxi">
-            <span>作者：{{ book.author }}</span>
-            <span>|</span>
-            <span>{{book.created_time}}</span>
+<ol id="mianbao" class="breadcrumb" style="background-color: white">
+    <li class="breadcrumb-item"><a href="{% url 'book:book_list' %}">书籍列表</a></li>
+    <li class="breadcrumb-item"><a href="#"></a></li>
+    <li class="breadcrumb-item active">{{book.title}}</li>
+</ol>
+<header class="article-header">
+    <h1 class="article-title">
+        <a href="">{{book.title}}</a>
+    </h1>
+    <div class="article-meta">
+        <span class="item article-meta-time">
+      <time class="time" data-toggle="tooltip" data-placement="bottom" title="{{book.created_time}}">
+          <i class="glyphicon glyphicon-time"></i> {{book.created_time}}
+      </time>
+      </span>
+        <span class="item article-meta-source" data-toggle="tooltip" data-placement="bottom" title="{{book.author}}"><i class="glyphicon glyphicon-globe"></i> {{book.author}}</span>
+        <span class="item article-meta-category" data-toggle="tooltip" data-placement="bottom" title="{{article.column}}"><i class="glyphicon glyphicon-list"></i> <a href="program" title="">{{article.column}}</a></span>
+        <span class="item article-meta-views" data-toggle="tooltip" data-placement="bottom" title="查看：{{ article.total_views}}"><i class="glyphicon glyphicon-eye-open"></i> 共0人围观</span>
+        <span class="item article-meta-comment" data-toggle="tooltip" data-placement="bottom" title="评论：0"><i class="glyphicon glyphicon-comment"></i> 0评论</span> </div>
+</header>
+ <article class="article-content">
+    <p>{{ book.body1|safe}}</p>
+    <p class="article-copyright hidden-xs">未经允许不得转载：<a href="">噼里啪啦博客</a> » <a href="article.html">php如何判断一个日期的格式是否正确</a></p>
+</article>
+<div class="article-tags">标签：<a href="" rel="tag">空白</a></div>
+<div class="article-tags"><a href="{% url 'book:download' book.id %}" rel="tag">下载此书</a></div>
+<div class="title" id="comment">
+    <h3>评论 <small>抢沙发</small></h3>
+</div>
+<div id="respond">
+    <form action="" method="post" id="comment-form">
+      <div class="comment">
+        <div class="comment-title"><img class="avatar" src="images/icon/icon.png" alt="" /></div>
+        <div class="comment-box">
+          <textarea placeholder="您的评论可以一针见血" name="comment" id="comment-textarea" cols="100%" rows="3" tabindex="1" ></textarea>
+          <div class="comment-ctrl"> <span class="emotion"><img src="images/face/5.png" width="20" height="20" alt="" />表情</span>
+            <div class="comment-prompt"> <i class="fa fa-spin fa-circle-o-notch"></i> <span class="comment-prompt-text"></span> </div>
+            <input type="hidden" value="1" class="articleid" />
+            <button type="submit" name="comment-submit" id="comment-submit" tabindex="5" articleid="1">评论</button>
+          </div>
         </div>
-        <!-- 文章正文 -->
-        {% if book.body1 %}
-            <div id="detail_zhengwen">​
-                <!-- 新增的目录 -->
-                <div id="detail_body">
-                    <p>{{ book.body1|safe}}</p>
-                </div>
-            </div>
-        {% endif %}
-        <div id="detail_time">
-            栏目: <a href="">留白</a>
-            <span>最后更新:{{book.updated_time}}</span>
+      </div>
+    </form>
+</div>
+<div id="postcomments">
+    <ol class="commentlist">
+      <li class="comment-content"><span class="comment-f">#1</span>
+        <div class="comment-avatar"><img class="avatar" src="images/icon/icon.png" alt="" /></div>
+        <div class="comment-main">
+          <p><span class="address">河南郑州</span><span class="time">(2016-01-06)</span><br />
+            这是匿名评论的内容这是匿名评论的内容，这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容。</p>
         </div>
-        <div class="book_down">
-            {% if user.is_authenticated %}
-                <a href="{% url 'book:download' book.id %}"><button type="button" class="btn btn-primary" onclick="downfile()">下载此书</button></a>
-            {% else %}
-                <a onclick="user_login()"><button type="button" class="btn btn-primary" onclick="downfile()">下载此书</button></a>
-            {% endif %}
-        </div>
-        <!--发表评论区-->
-        <div id="detail_comment">
-            {% if user.is_authenticated %}
-                <div id="post-comment">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="body"><strong>我也要发言：</strong></label>
-                            <textarea type="text" class="form-control" id="body" name="body"></textarea>
-                        </div>
-                        <!-- 提交按钮 -->
-                        <button type="submit">发送</button>
-                    </form>
-                </div>
-            {% else %}
-                <h5 class="row justify-content-center" id="pinlun_tishi">
-                    请<a href="#" onclick="user_login()">登录</a>后发表评论
-                </h5>
-            {% endif %}
-        </div>
-        <!--评论显示区-->
-        <div id="comment_area">
-            <h5>共有{{ comments.count }}条评论</h5>
-            <div>
-                {% for comment in comments %}
-            <p>
-                <strong style="color: darkblue">
-                    {{ comment.user }}
-                </strong> 于
-                <span style="color: green">
-                    {{ comment.created|date:"Y-m-d H:i:s" }}
-                </span> 时说：
-            </p>
-            <pre style="font-family: inherit; font-size: 1em;">{{ comment.body }}</pre>
-                 {% endfor %}
-            </div>
-        </div>
-    </div>
+      </li>
+    </ol>
+  </div>
 {% endblock content %}

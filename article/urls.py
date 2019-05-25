@@ -4,8 +4,10 @@ from . import views
 app_name = 'article'
 
 urlpatterns = [
+    # 首页
+    path('article/',views.article, name='article'),
     # 文章列表
-    path('article-list/',views.article_list, name='article_list'),
+    path('article-list/', views.article_list, name='article_list'),
     # 文章详情
     path('article-detail/<int:id>', views.artilce_detail, name='article_detail'),
     # 创建文章

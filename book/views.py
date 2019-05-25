@@ -29,7 +29,6 @@ def book_detail(request, id):
     return render(request, 'book/bdetail.html', context)
 
 # 书籍下载
-@login_required
 def download(request, id):
     book = BookPost.objects.filter(id=id)
     filename = book[0].downname

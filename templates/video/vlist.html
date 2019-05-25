@@ -1,11 +1,10 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
 {% load staticfiles %}
 <!-- 写入 base.html 中定义的 title -->
 {% block title %}
     视频列表页
 {% endblock title %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/video_list.css' %}">
     <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block content %}

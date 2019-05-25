@@ -21,6 +21,7 @@ def user_login(request):
             user = authenticate(username=data['username'], password=data['password'])
             if user:
                 login(request, user)
+                print(next)
                 return HttpResponse(json.dumps({'statue':1, 'next':next}))
             else:
                 return HttpResponse(json.dumps({'statue':0, 'next':''}))
@@ -29,7 +30,7 @@ def user_login(request):
 # 用户退出
 def user_logout(request):
     logout(request)
-    return redirect('article:article_list')
+    return redirect('article:article')
 
 #用户注册
 def user_register(request):
