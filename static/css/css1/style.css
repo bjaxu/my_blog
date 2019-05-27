@@ -51,7 +51,6 @@ li {
 	text-align: -webkit-match-parent;
 }
 li.active {
-	background: #FFF;
 	opacity: .9;
 	filter: alpha(opacity=90);
 }
@@ -253,13 +252,14 @@ color:#FFF;
 .navbar-nav>li>a {
 	color: #777;
 	padding: 0px 15px;
-	line-height: 60px;
+	line-height: 50px;
 	font-size: 16px;
 }
 .container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header {
 	margin-right: 0px;
 	margin-left: 0px;
 }
+
 /*LOGO效果*/
 /*
 .navbar>.container .logo:hover {
@@ -528,7 +528,7 @@ color:#FFF;
 
 @media (max-width: 600px) {
 .carousel {
-	display: none;
+	display: block;
 }
 .jumbotron {
 	display: block;
@@ -538,6 +538,16 @@ color:#FFF;
 @media (max-width:480px) {
 .jumbotron {
 	display: none;
+}
+.navbar-header{
+	background-color: #FD5668;
+}
+.navbar-default .navbar-toggle {
+	height:40px;
+	margin-right: 10px;
+	margin-top: 6px;
+	background-color: #ffffff;
+	padding-bottom: 5px;
 }
 }
 /*今日推荐*/
@@ -1573,11 +1583,22 @@ color:#FFF;
 }
 /*手机书籍列表*/
 .content .book_list{
-	width: 170px;
+	width: 160px;
 	height: 250px;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 .content .book_list .book img{
 	padding-left: 20px;
+}
+.book .title1{
+	font-size: 12px;
+	height: 30px;
+	padding-left: 20px;
+}
+.u-author{
+	padding-left: 20px;
+	font-size: 10px;
 }
 /*手机书籍详情*/
 #mianbao{
@@ -1585,7 +1606,11 @@ color:#FFF;
 }
 /*手机端视频列表显示*/
 .content .one_video{
-	margin: 5px 0;
+	margin: 5px 0 5px 15px;
+}
+.content .one_video .zoom-container img{
+	width: 310px;
+	height: 165px;
 }
 .content .zoom-container .icon-play {
 	display: block;
@@ -1599,6 +1624,10 @@ color:#FFF;
 	height: 35px;
 	padding: 8px 6px;
 	border-radius: 50%;
+}
+/*手机端图片墙显示*/
+#lanrenzhijia .lanren img{
+	width: 98%;
 }
 .pagetitle h1 {
 	font-size: 16px;
@@ -2252,14 +2281,14 @@ color:#FFF;
 	padding-left: 35px;
 	padding-top: 10px;
 }
-.book .title{
+.book .title1{
 	color: #555;
 	display: block;
     padding-left: 35px;
     line-height: 18px;
 	height: 40px;
 }
-.book .title:hover{
+.book .title1:hover{
 	color: #fd7e14;
 }
 .u-author{
@@ -2445,4 +2474,197 @@ color:#FFF;
 /*面包屑导航*/
 #mianbao{
 	padding-left: 0px;
+}
+/*导航栏*/
+#header-navbar{
+	background-color:#FD5668;
+}
+#header-navbar .navbar-nav li a{
+	color: #faf2cc;
+}
+/*时钟*/
+#CalendarMain {
+	width: 300px;
+	height: 300px;
+	border: 1px solid #ccc;
+	margin: 0 auto;
+}
+#title {
+	width: 100%;
+	height: 30px;
+	background-color: #FD5668;
+}
+.selectBtn {
+	font-weight: 900;
+	font-size: 15px;
+	color: #fff;
+	cursor: pointer;
+	text-decoration: none;
+	padding: 7px 10px 6px 10px;
+}
+.selectBtn:hover {
+	background-color: #3399CC;
+}
+.selectYear {
+	float: left;
+	margin-left: 50px;
+	position: absolute;
+}
+.selectMonth {
+	float: left;
+	margin-left: 120px;
+	position: absolute;
+}
+.month {
+	float: left;
+	position: absolute;
+}
+.nextMonth {
+	float: right;
+}
+.currentDay {
+	float: right;
+}
+#context {
+	background-color: #fff;
+	width: 100%;
+}
+.week {
+	width: 100%;
+	height: 30px;
+}
+.week>h3 {
+	float: left;
+	color: #808080;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	margin-top: 5px;
+	font-size: 16px;
+}
+.dayItem {
+	float: left;
+}
+.lastItem {
+	color: #d1c7b7 !important;
+}
+.item1 {
+	color: #333;
+	float: left;
+	text-align: center;
+	cursor: pointer;
+	margin: 0;
+	font-size: 13px;
+}
+.item1 a{
+	color: #333;
+}
+.item1:hover {
+	color: #FD5668;
+}
+.currentItem>a {
+	background-color: #FD5668;
+	width: 25px;
+	line-height: 25px;
+	float: left;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	color: #fff;
+}
+#foots {
+	width: 100%;
+	height: 35px;
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+	margin-top: -1px;
+}
+#footNow {
+	float: right;
+	margin: 6px 15px 0 0;
+	color: #FD5668;
+}
+#Container {
+	overflow: hidden;
+	float: left;
+}
+#center {
+	width: 100%;
+	overflow: hidden;
+}
+#centerMain {
+	width: 300%;
+	margin-left: -100%;
+}
+#selectYearDiv {
+	float: left;
+	background-color: #fff;
+}
+#selectYearDiv>div {
+	float: left;
+	text-align: center;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	margin-left: -1px;
+	margin-top: -1px;
+	cursor: pointer;
+	color: #909090;
+}
+.currentYearSd, .currentMontSd {
+	color: #ff4400 !important;
+}
+#selectMonthDiv {
+	float: left;
+	background-color: #fff;
+}
+#selectMonthDiv>div {
+	color: #909090;
+	float: left;
+	text-align: center;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	margin-left: -1px;
+	margin-top: -1px;
+	cursor: pointer;
+}
+#selectYearDiv>div:hover, #selectMonthDiv>div:hover {
+	background-color: #efefef;
+}
+#centerCalendarMain {
+	float: left;
+}
+#rili{
+	background-color: #F5F8FC;
+	border: none;
+}
+/*图片墙 */
+#lanrenzhijia{
+	position:relative;
+	width:100%;
+	margin:0 auto;
+}
+.lanren{
+	margin-left: 14px;
+	width:365px;
+	float:left;
+	box-shadow: 0 1px 3px rgba(34,25,25,0.2);
+	overflow:hidden;padding:5px;
+	text-align:center;
+	border:1px solid #DEDCDC;
+	border-radius:3px;
+	overflow:hidden;
+}
+.lanren:hover{
+	box-shadow: 0 1px 3px rgba(34,25,25,0.5);
+	border:1px solid #AFAFAF
+}
+.lanren img{
+	width:358px;
+	margin-bottom:5px;
+	padding-right: 5px;
+}
+.lanren a{
+	color:#666;
+	text-decoration:none;
+	font-size:12px;
 }

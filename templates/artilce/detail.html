@@ -19,7 +19,7 @@
 {% block content %}
 <ol class="breadcrumb" style="background-color: white">
     <li class="breadcrumb-item"><a href="{% url 'arctile:article_list' %}">文章列表</a></li>
-    <li class="breadcrumb-item"><a href="#"></a></li>
+    <li class="breadcrumb-item"><a href="#">{{article.column}}</a></li>
     <li class="breadcrumb-item active">{{article.title}}</li>
 </ol>
       <header class="article-header">

@@ -1,0 +1,95 @@
+{% extends "base1.html" %}
+{% load staticfiles %}
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    图片列表页
+{% endblock title %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/css1/jquery.fs.boxer.css' %}">
+    <style>
+        .content{
+            width: 100%;
+            background-color: #fff;
+        }
+    </style>
+{% endblock head %}
+{% block content %}
+<div id="lanrenzhijia">
+        {% for photo in photo_lists %}
+        <div class="lanren">
+            <a class="boxer" href="{{photo.image_url}}">
+                <img class="lazy" src="" data-original="{{photo.image_url}}" />
+                <a href="">{{photo.title}}</a>
+            </a>
+        </div>
+        {% endfor %}
+</div>
+{% endblock content %}
+{% block sidebar %}
+{% endblock sidebar %}
+{% block js %}
+<script src="{% static 'pjs/blocksit.min.js' %}"></script>
+<script src="{% static 'pjs/jquery.fs.boxer.min.js' %}"></script>
+<script>
+function IsPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = ["Android", "iPhone",
+                    "SymbianOS", "Windows Phone",
+                    "iPad", "iPod"];
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    };
+    $(document).ready(function(){
+        var isPC=IsPC();
+        if(isPC){
+            $(function(){
+                $("img.lazy").lazyload({
+                    load:function(){
+                        $('#lanrenzhijia').BlocksIt({
+                            numOfCol:3, //每行显示图片个数
+                            offsetX: 8,
+                            offsetY: 8
+                        });
+                    },
+                effect: "fadeIn",
+                });
+                $(window).scroll(function(){
+                        // 当滚动到最底部以上50像素时， 加载新内容
+                    if ($(document).height() - $(this).scrollTop() - $(this).height()<50){
+                        $('#lanrenzhijia').BlocksIt({
+                            numOfCol:3, //每行显示图片个数
+                            offsetX: 8,
+                            offsetY: 8
+                        });
+                        $("img.lazy").lazyload();
+                    }
+                });
+                $('.boxer').boxer({
+                    opacity: 0.9,
+                    margin:0,
+                });
+            });
+      }
+        else{
+            $(function(){
+                $("img.lazy").lazyload({
+                    load:function(){
+                        $('#lanrenzhijia').BlocksIt({
+                            numOfCol:1, //每行显示图片个数
+                            offsetX: 8,
+                            offsetY: 8
+                        });
+                    },
+                effect: "fadeIn",
+                });
+            });
+        }
+    });
+</script>
+{% endblock js %}

@@ -13,8 +13,10 @@
             <ul>
                 <li>
                     <div class="book">
-                        <a href="{% url 'book:book_detail' book.id %}" class="cover"  target="_blank"><img src="{{book.avatar.url}}"  style="display: block;"></a>
-                        <a href="{% url 'book:book_detail' book.id %}" class="title" target="_blank">{{book.title}}</a>
+                        <a href="{% url 'book:book_detail' book.id %}" class="cover"  target="_blank">
+                            <img src="{{book.avatar.url}}"  style="display: block;">
+                        </a>
+                        <a href="{% url 'book:book_detail' book.id %}" class="title1" target="_blank">{{book.title}}</a>
                     </div>
                     <div class="info">
                         <p class="u-author">

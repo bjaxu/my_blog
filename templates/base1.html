@@ -65,10 +65,10 @@
           <li class="hidden-index active"><a data-cont="网站首页" href="{% url 'arctile:article' %}">网站首页</a></li>
           <li><a href="{% url 'arctile:article_list' %}">文章列表</a></li>
           <li><a href="{% url 'book:book_list' %}">书籍推荐</a></li>
-          <li><a href="links.html">工具集合</a></li>
+          <li><a href="{% url 'photo:photo_list' %}">照片欣赏</a></li>
           <li><a href="{% url 'video:video_list' %}">我的视频</a></li>
         </ul>
-        <form class="navbar-form visible-xs" action="/Search" method="post">
+        <form class="navbar-form visible-xs" action="" method="post">
           <div class="input-group">
             <input type="text" name="keyword" class="form-control" placeholder="请输入关键字" maxlength="20" autocomplete="off">
             <span class="input-group-btn">
@@ -162,6 +162,7 @@
     {% endblock content %}
     </div>
   </div>
+{% block sidebar %}
   <aside class="sidebar">
     <div class="fixed">
       <div class="widget widget-tabs">
@@ -198,13 +199,37 @@
         </form>
       </div>
     </div>
-    <div class="widget widget_sentence">
-      <h3>人生格言</h3>
-      <div class="widget-sentence-content">
-          <p>人生的磨难是很多的，所以我们不可对于每一件轻微的伤害都过于敏感。
-            在生活磨难面前，精神上的坚强和无动于衷是我们抵抗罪恶和人生意外的最好武器。
-        </p>
-      </div>
+    <div class="widget widget_sentence" id="rili">
+        <div id="CalendarMain">
+          <div id="title">
+              <a class="selectBtn month" href="javascript:" onClick="CalendarHandler.CalculateLastMonthDays();"><</a>
+              <a class="selectBtn selectYear" href="javascript:" onClick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2014年</a>
+              <a class="selectBtn selectMonth" onClick="CalendarHandler.CreateSelectMonth()">6月</a>
+              <a class="selectBtn nextMonth" href="javascript:" onClick="CalendarHandler.CalculateNextMonthDays();">></a>
+              <a class="selectBtn currentDay" href="javascript:" onClick="CalendarHandler.CreateCurrentCalendar(0,0,0);">今天</a>
+          </div>
+          <div id="context">
+            <div class="week">
+              <h3> 一 </h3>
+              <h3> 二 </h3>
+              <h3> 三 </h3>
+              <h3> 四 </h3>
+              <h3> 五 </h3>
+              <h3> 六 </h3>
+              <h3> 日 </h3>
+            </div>
+            <div id="center">
+              <div id="centerMain">
+                <div id="selectYearDiv"></div>
+                <div id="centerCalendarMain">
+                  <div id="Container"></div>
+                </div>
+                <div id="selectMonthDiv"></div>
+              </div>
+            </div>
+            <div id="foots"><a id="footNow">19:14:34</a></div>
+          </div>
+        </div>
     </div>
     {% if article_lists %}
     <div class="widget widget_hot">
@@ -228,6 +253,7 @@
     </div>
     {% endif %}
   </aside>
+{% endblock %}
 </section>
 <footer class="footer">
   <div class="container">

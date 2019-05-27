@@ -35,5 +35,7 @@ urlpatterns = [
     path('book/', include('book.urls', namespace='book')),
     # 视频
     path('video/', include('video.urls', namespace='video')),
+    # 图片
+    path('photo/', include('photo.urls', namespace='photo')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
