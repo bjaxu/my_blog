@@ -1,6 +1,6 @@
 certifi==2019.3.9
 chardet==3.0.4
-Django==2.1.7
+Django==2.2.24
 django-appconf==1.0.3
 django-bootstrap-form==3.4
 django-ckeditor==5.7.1
