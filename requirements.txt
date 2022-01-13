@@ -10,7 +10,7 @@ django-password-reset==2.0
 idna==2.8
 Markdown==3.1
 pilkit==2.0
-Pillow==6.0.0
+Pillow==9.0.0
 Pygments==2.3.1
 PyMySQL==0.9.3
 pytz==2019.1
